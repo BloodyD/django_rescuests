@@ -47,3 +47,11 @@ CRON_CLASSES = [
 # following command will send requests to all existing Request objects, with the status Request.NEW or Request.RETRYING
 >> python manage.py runcrons
 ```
+
+
+## Project Structure
+rescuests
+|--- admin.py   > AdminModel for the Request model
+|--- cron.py    > Cron job definition
+|--- models.py  > Reuest model definition
+|--- signals.py > signal definition
