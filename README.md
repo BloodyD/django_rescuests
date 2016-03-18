@@ -20,7 +20,8 @@ def failed(sender, instance, response, error, *args, **kw):
   # handle each single request failure
 
 
-# create Requests objects and run them. will send different signals depending on the status code of the response
+# create Requests objects and run them. 
+# will send different signals depending on the status code of the response
 from rescuests.models import Request
 req = Request(url = "https://httpbin.org/get")
 req.run() # > will call 'success'
@@ -44,7 +45,8 @@ CRON_CLASSES = [
   "rescuests.cron.SendRequests",
 ]
 
-# following command will send requests to all existing Request objects, with the status Request.NEW or Request.RETRYING
+# following command will send requests to all existing Request objects, 
+# with the status Request.NEW or Request.RETRYING
 >> python manage.py runcrons
 ```
 
