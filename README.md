@@ -6,7 +6,7 @@ To track the status of the created request, signals inform your app about succes
 ## Short Example
 
 ```
-#somewhere in your app
+# register the signals
 
 from rescuests.signals import request_done, request_failed
 from django.dispatch import receiver
@@ -20,6 +20,7 @@ def failed(sender, instance, response, error, *args, **kw):
   # handle each single request failure
 
 
+# create Requests objects and run them. will send different signals depending on the status code of the response
 from rescuests.models import Request
 req = Request(url = "https://httpbin.org/get")
 req.run() # > will call 'success'
