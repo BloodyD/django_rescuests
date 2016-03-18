@@ -3,6 +3,19 @@ This is a simple framework which helps creating external web requests in your Dj
 
 To track the status of the created request, signals inform your app about success or failure of a request.
 
+## Installation
+1. install from pypi or from github
+```
+pip install django-rescuests
+```
+or
+```
+git clone https://github.com/BloodyD/django_rescuests
+cd django_rescuests
+pip install -r requirements.txt
+python setup.py install
+```
+
 ## Short Example
 
 ```
