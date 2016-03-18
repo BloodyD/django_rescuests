@@ -16,4 +16,3 @@ class RequestAdmin(admin.ModelAdmin):
 
   def current_retries(self, instance):
     return "{} / {}".format(instance.retries, instance.max_retries)
-  # current_retries.short_description = "Current Retries"

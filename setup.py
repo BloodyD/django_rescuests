@@ -11,17 +11,17 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-rescuests",
-    version = '0.1',
+    version = '0.1.3',
     packages = find_packages(),
     namespace_packages = ['rescuests'],
     requires = ['django (>=1.6)', 'django_cron'],
     author = "Dimitri Korsch",
     author_email = "korschdima@gmail.com",
     description = "A framework sending, tracking and retrying REST requests in Django.",
-    long_description = open('README.md').read(),
+    # long_description = open('README.md').read(),
     license = "LICENSE",
     keywords = "requests, fault tollerant, django, framework",
-    url = "https://github.com/bloodyd/django-rescuests",
+    url = "https://github.com/BloodyD/django_rescuests",
     include_package_data = True,
     classifiers=[
         "Development Status :: 4 - Beta",
