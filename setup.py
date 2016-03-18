@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-rescuests",
-    version = '0.1.3',
+    version = '0.1.4',
     packages = find_packages(),
     namespace_packages = ['rescuests'],
     requires = ['django (>=1.6)', 'django_cron'],
