@@ -50,8 +50,10 @@ CRON_CLASSES = [
 
 
 ## Project Structure
+```
 rescuests
 |--- admin.py   > AdminModel for the Request model
 |--- cron.py    > Cron job definition
 |--- models.py  > Reuest model definition
 |--- signals.py > signal definition
+```
