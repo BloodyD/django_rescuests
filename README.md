@@ -3,7 +3,7 @@ This is a simple framework which helps creating external web requests in your Dj
 
 To track the status of the created request, signals inform your app about success or failure of a request.
 
-Short Example:
+## Short Example
 
 ```
 #somewhere in your app
@@ -26,4 +26,23 @@ req.run() # > will call 'success'
 
 req = Request(url = "https://httpbin.org/status/500")
 req.run() # > will call 'failed'
+```
+
+## Using django_cron (http://github.com/tivix/django-cron)
+
+```
+# settings.py of your project
+INSTALLED_APPS = [
+  ...
+  'rescuests',
+  'django_cron',
+  ...
+]
+
+CRON_CLASSES = [
+  "rescuests.cron.SendRequests",
+]
+
+# following command will send requests to all existing Request objects, with the status Request.NEW or Request.RETRYING
+>> python manage.py runcrons
 ```
