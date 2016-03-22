@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'testapp',
     'rescuests',
-    'django_extensions',
+    # 'django_extensions',
     "django_cron",
 )
 
