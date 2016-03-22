@@ -2,3 +2,4 @@ requests
 django>=1.6
 model_mommy
 django_cron
+mock
