@@ -77,6 +77,37 @@ CRON_CLASSES = [
 >> python manage.py runcrons
 ```
 
+## Testing your app with Rescuests
+For test cases, where your app uses requests you sometimes don't want to send real requests. For this case, Rescuests has a mock context manager. Here is a short example how the manager can be used:
+
+```
+import mock # python 2.7 import of mock library
+from unittest import mock # python 3 import of the mock library
+
+# somewhere in a test case class
+def test_your_app_does_a_request(self):
+  inner_func = mock.Mock()
+  
+  with Request.mock(inner_func):
+    request = Request(url = "http://someurl.com")
+    request.save()
+    request.run()
+  
+  inner_func.assert_called_with(200, "http://someurl.com")
+  
+def test_your_app_does_a_bad_request(self):
+  inner_func = mock.Mock()
+  
+  with Request.mock(inner_func):
+    request = Request(url = "http://someurl.com", status = 404)
+    request.save()
+    request.run()
+  
+  inner_func.assert_called_with(404, "http://someurl.com")
+  
+```
+
+With this context manager you can simply test the <code>request_done</code> and <code>request_failed</code> signals and whether your app react properly to these. For more examples, check <code>tests</code> folder and the test cases there.
 
 ## Project Structure
 ```
