@@ -11,9 +11,8 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-rescuests",
-    version = '0.2.0',
+    version = '0.2.1',
     packages = find_packages(exclude=["tests*"]),
-    namespace_packages = ['rescuests'],
     requires = ['django (>=1.6)', 'django_cron'],
     author = "Dimitri Korsch",
     author_email = "korschdima@gmail.com",
