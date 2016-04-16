@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-rescuests",
-    version = '0.2.1',
+    version = '0.2.2',
     packages = find_packages(exclude=["tests*"]),
     requires = ['django (>=1.6)', 'django_cron'],
     author = "Dimitri Korsch",

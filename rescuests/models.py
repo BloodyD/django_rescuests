@@ -55,10 +55,12 @@ class Request(models.Model):
     self.comment += str(error) + "\n"
     self.retries += 1
     self.status = Request.FAILED if self.retries > self.max_retries else Request.RETRYING
+    self.save()
     request_failed.send(sender = Request, instance = self, response = response, error = error)
 
   def __succeded(self, response):
     self.status = Request.READY
+    self.save()
     request_done.send(sender = Request, instance = self, response = response)
 
   def run(self):
