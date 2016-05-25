@@ -17,6 +17,7 @@ class Request(models.Model):
   MOCK_REQUESTS_SETTING = "RESCUESTS_MOCK_REQUESTS"
   MOCK_STATUS_SETTING = "RESCUESTS_MOCK_STATUS"
   MOCK_FUNC_SETTING = "RESCUESTS_MOCK_FUNC"
+  MOCK_CONTENT_SETTING = "RESCUESTS_MOCK_CONTENT"
 
 
   uuid = models.CharField(verbose_name='UUID', max_length = 127, default = uuid.uuid4)
@@ -29,25 +30,30 @@ class Request(models.Model):
   comment = models.TextField(blank = True)
 
   class mock():
-    def __init__(self, func, status = 200):
+    def __init__(self, func, status = 200, content = None):
       self.func = func
       self.status = status
+      self.content = content
       self.saved_requests_setting = False
       self.saved_func_setting = None
+      self.saved_content_setting = None
       self.saved_status_setting = 200
 
     def __enter__(self):
       self.saved_requests_setting = getattr(settings, Request.MOCK_REQUESTS_SETTING, False)
       self.saved_func_setting = getattr(settings, Request.MOCK_FUNC_SETTING, None)
+      self.saved_content_setting = getattr(settings, Request.MOCK_CONTENT_SETTING, None)
       self.saved_status_setting = getattr(settings, Request.MOCK_STATUS_SETTING, 200)
 
       setattr(settings, Request.MOCK_REQUESTS_SETTING, True)
       setattr(settings, Request.MOCK_FUNC_SETTING, self.func)
+      setattr(settings, Request.MOCK_CONTENT_SETTING, self.content)
       setattr(settings, Request.MOCK_STATUS_SETTING, self.status)
 
     def __exit__(self, *args):
       setattr(settings, Request.MOCK_REQUESTS_SETTING, self.saved_requests_setting)
       setattr(settings, Request.MOCK_FUNC_SETTING, self.saved_func_setting)
+      setattr(settings, Request.MOCK_CONTENT_SETTING, self.saved_content_setting)
       setattr(settings, Request.MOCK_STATUS_SETTING, self.saved_status_setting)
 
 
@@ -85,6 +91,7 @@ class Request(models.Model):
   def mock_request(self):
     status = getattr(settings, Request.MOCK_STATUS_SETTING, 200)
     return_func = getattr(settings, Request.MOCK_FUNC_SETTING, None)
+    return_content = getattr(settings, Request.MOCK_CONTENT_SETTING, None)
 
     if status not in [200, 403, 404, 500]:
       raise ValueError("currently only 200, 403, 404, 500 status "
@@ -101,9 +108,14 @@ class Request(models.Model):
     return_func(status, self.url)
 
     if status == 200:
-      self.__succeded(None)
+      self.__succeded(self.mock_response(status, return_content))
     else:
-      self.__failed(None, Exception("mocked exception"))
+      self.__failed(self.mock_response(status, return_content), Exception("mocked exception"))
 
     self.save()
 
+  def mock_response(self, status, content):
+    resp = requests.Response()
+    resp.status_code = status
+    resp._content = content(self) if callable(content) else content
+    return resp
